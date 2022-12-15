@@ -1,0 +1,132 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+CREATE VIEW [dbo].[HrEmployeeCurrentSnapshotForValidOrgs_Deduplicated]
+AS
+-- Deduplicates EMPLOYEE_ID, DEPT_CODE by taking the record that has no separation date, or the latest separation date
+
+SELECT
+	[EMPLOYEE_ID]
+	,[RCP_ID_C]
+	,[EMPLOYEE_NAME]
+	,[CAMPUS_CODE]
+	,[CAMPUS_DESCR]
+	,[DEPT_CODE]
+	,[DEPT_DESCR]
+	,[EMPLOYMENT_STATUS_CODE]
+	,[EMPLOYEE_TYPE_CODE]
+	,[BIRTH_DATE]
+	,[EDUCATION_CODE]
+	,[CITIZEN_CODE_C]
+	,[GENDER_CODE]
+	,[EMPLOYMENT_DATE]
+	,[TENURE_DATE]
+	,[SEPARATION_CODE]
+	,[SEPARATION_DATE]
+	,[SENIORITY_DATE]
+	,[I9_IND]
+	,[I9_DATE]
+	,[JOB_BEGIN_DATE]
+	,[LEAVE_REASON_CODE]
+	,[LAST_INCREASE_DATE]
+	,[FWT_GROSS_YTD_AMT_C]
+	,[STATE_GROSS_YTD_AMT_C]
+	,[LAST_PAY_DATE]
+	,[PAY_END_DT]
+	,[ASOF_DT]
+	,[ADDR_1]
+	,[ADDR_2]
+	,[CITY]
+	,[STATE]
+	,[ZIP_CODE]
+	,[COUNTY]
+	,[HOME_PHONE_NO]
+	,[BLDG_NO]
+	,[ROOM_NO]
+	,[SERVICE_AWARD_DATE]
+	,[SENIORITY_DATE_FOR_888]
+	,[ZIP_CODE_PLUS_4]
+	,[EMERGENCY_CONTACT_NAME]
+	,[EMERGENCY_CONTACT_PHONE_NO]
+	,[CAMPUS_PHONE_NO_1]
+	,[CAMPUS_PHONE_NO_EXT_1]
+	,[CAMPUS_PHONE_NO_2]
+	,[CAMPUS_PHONE_NO_EXT_2]
+	,[FAX_NO]
+	,[EMAIL_ADDR]
+	,[PRIOR_YEAR_GROSS_YTD_AMT_C]
+	,[PRIOR_PRIOR_YEAR_GRS_YTD_AMT_C]
+	,[APPT_NO_C]
+	,[PRIME_IND]
+	,[EMPL_CLASS]
+	,[EMPL_CLASS_DESCR]
+	,[PAYGROUP]
+	,[PAYGROUP_DESCR]
+	,[LAST_HIRE_DT]
+	,[RU_ORG_ROLE]
+	,[MOST_RECENT_ACTION_CODE]
+	,[MOST_RECENT_ACTION_DATE]
+	,[APPT_BEGIN_DATE]
+	,[APPT_END_DATE]
+	,[JOB_CLASS]
+	,[TITLE_DESCR]
+	,[PAY_CODE]
+	,[RANGE_NO]
+	,[STEP_NO_C]
+	,[PART_TIME_PCT_C]
+	,[ANNV_DT]
+	,[UNIT_AFFILIATION_CODE]
+	,[PAY_RATE_C]
+	,[ADJUSTED_PAY_RATE_C]
+	,[BIWEEKLY_RATE_AMT_C]
+	,[ROOM_MEALS_AMT_C]
+	,[COUNTY_PAY_AMT_C]
+	,[DEPT_AFFIL_CODE]
+	,[REPORTING_REL_CODE]
+	,[TEACHING_CREDITS_NO_C]
+	,[REPORTING_REL_DATE]
+	,[SPEC_DISCIPLINE_CD]
+	,[OCCUPATION_CODE]
+	,[RANK_CODE]
+	,[STANDARD_HOURS_CODE]
+	,[SALARY_TABLE_CODE]
+	,[UNIT_CODE]
+	,[JOB_GROUP_CODE]
+	,[MAIL_DISTRIBUTION_CODE]
+	,[FAC_STAFF_IND]
+	,[STATE_PCT_C]
+	,[AES_PCT_C]
+	,[FED_PCT_C]
+	,[AUX_PCT_C]
+	,[GRANT_PCT_C]
+	,[LAST_NAME]
+	,[FIRST_NAME]
+	,[MIDDLE_INIT]
+	,[VISA_TYPE_CODE]
+FROM
+(
+	SELECT 
+		hr.*
+		-- Sort by separation date within each EMPLOYEE_ID/DEPT_CODE, so we can take the top row
+		,ROW_NUMBER() OVER (
+			PARTITION BY hr.EMPLOYEE_ID, hr.DEPT_CODE 
+			ORDER BY 
+				-- NULL dates come sequentially before any real date, so we want to reverse that so null's take precedence in a DESCENDING sort
+				CASE WHEN SEPARATION_DATE IS NULL 
+					THEN '9999-12-31 23:59:59.997'
+					ELSE SEPARATION_DATE
+					END DESC
+				-- want the earliest record for hires
+				, CASE WHEN JOB_BEGIN_DATE < APPT_BEGIN_DATE
+					THEN JOB_BEGIN_DATE
+					ELSE APPT_BEGIN_DATE
+					END ASC
+			) as _row
+	FROM CentralDataFeed.app_onboardingoffboarding.OUTPUT_HR_EMPLOYEES hr
+	INNER JOIN Org o
+		ON o.Id = hr.DEPT_CODE
+) z
+-- Top row from inner query should be the null separation date record, or the latest one
+WHERE z._row = 1
+GO

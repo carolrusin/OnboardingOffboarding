@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 14.875" name="OnboardingOffboarding">
+  <DataContextMoniker Name="/OnboardingOffboardingDataContext" />
+  <nestedChildShapes>
+    <classShape Id="449c7172-f4fb-4e93-8ca7-3badcdc417b3" absoluteBounds="3.75, 7.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/BatchLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="13e328e7-4f8a-46df-872d-a96b056a3f5b" absoluteBounds="3.765, 7.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="84ddda8a-9e1f-4f90-8afe-d3c7299802ca" absoluteBounds="0.75, 4.125, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/Org" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b0e6008b-ae22-4ab8-89f3-975c3d01c57e" absoluteBounds="0.765, 4.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="520d8ccd-e607-497d-a00c-07a8e1d831e5" absoluteBounds="0.75, 6.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/Employee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7427bbed-9cb1-4f11-94d9-ef979fc4b701" absoluteBounds="0.765, 7.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f46dcb0f-d3e3-4f71-9050-dc3f9246f9bd" absoluteBounds="3.5, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/EmployeeOrg" />
+      <nestedChildShapes>
+        <elementListCompartment Id="879b3f0a-c1f9-49fa-a282-f23720312f61" absoluteBounds="3.515, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7376de1c-f324-4c4e-b1ee-5969d25ac413" absoluteBounds="3.5, 4, 2, 1.770896809895834">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/EmployeeOrgReplay" />
+      <nestedChildShapes>
+        <elementListCompartment Id="06d6523e-7173-4896-8c7e-bb5d13582dde" absoluteBounds="3.515, 4.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 6.75153746153846); (3.125 : 6.37653746153846); (3.125 : 1.82774983723958); (3.5 : 1.82774983723958)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/OnboardingOffboardingDataContext/Employee/Employee_EmployeeOrg" />
+      <nodes>
+        <classShapeMoniker Id="520d8ccd-e607-497d-a00c-07a8e1d831e5" />
+        <classShapeMoniker Id="f46dcb0f-d3e3-4f71-9050-dc3f9246f9bd" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 4.125); (1.75 : 2.39787725585937); (3.04166666666667 : 2.39787725585937 : JumpStart); (3.20833333333333 : 2.39787725585937 : JumpEnd); (3.5 : 2.39787725585937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/OnboardingOffboardingDataContext/Org/Org_EmployeeOrg" />
+      <nodes>
+        <classShapeMoniker Id="84ddda8a-9e1f-4f90-8afe-d3c7299802ca" />
+        <classShapeMoniker Id="f46dcb0f-d3e3-4f71-9050-dc3f9246f9bd" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.93827123076923); (3.59375 : 6.93827123076923); (3.59375 : 5.77089680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/OnboardingOffboardingDataContext/Employee/Employee_EmployeeOrgReplay" />
+      <nodes>
+        <classShapeMoniker Id="520d8ccd-e607-497d-a00c-07a8e1d831e5" />
+        <classShapeMoniker Id="7376de1c-f324-4c4e-b1ee-5969d25ac413" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.81814697265625); (3.04166666666667 : 4.81814697265625 : JumpStart); (3.20833333333333 : 4.81814697265625 : JumpEnd); (3.5 : 4.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/OnboardingOffboardingDataContext/Org/Org_EmployeeOrgReplay" />
+      <nodes>
+        <classShapeMoniker Id="84ddda8a-9e1f-4f90-8afe-d3c7299802ca" />
+        <classShapeMoniker Id="7376de1c-f324-4c4e-b1ee-5969d25ac413" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8d55e886-0ac5-4763-a46b-6acccd29488b" absoluteBounds="0.75, 9.75, 2, 4.8477197265624987">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/HrEmployeeHistoryForValidOrg" />
+      <nestedChildShapes>
+        <elementListCompartment Id="94a1c706-3744-4955-812d-76f7aad00a85" absoluteBounds="0.765, 10.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ef45395e-9394-4c43-b387-98122f45d716" absoluteBounds="3.625, 9.875, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/OnboardingOffboardingDataContext/HrUniqueEmployeesForValidOrg" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9c2d476c-871a-4219-83f4-57db952070ed" absoluteBounds="3.6400000000000006, 10.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

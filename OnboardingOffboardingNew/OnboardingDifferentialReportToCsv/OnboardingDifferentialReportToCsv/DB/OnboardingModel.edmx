@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OnboardingOffboardingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="PROC_EmployeeDeptDifferential" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="s1" Type="datetime" Mode="In" />
+          <Parameter Name="e1" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="OnboardingOffboardingModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnboardingOffboardingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OnboardingOffboardingEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="PROC_EmployeeDeptDifferential" ReturnType="Collection(OnboardingOffboardingModel.EmplyeeDeptReport)">
+            <Parameter Name="s1" Mode="In" Type="DateTime" />
+            <Parameter Name="e1" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="PROC_EmployeeDeptDifferential_Result">
+          <Property Type="String" Name="employee_id" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="dept_code" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="DeptHireDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DeptEndDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="RutgersHireDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DeptTerminationDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="RutgersTerminationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EMP_START_STATUS" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="EMP_END_STATUS" Nullable="false" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="EmplyeeDeptReport" >
+          <Property Type="String" Name="Employee_ID" Nullable="false" />
+          <Property Type="String" Name="Dept_Code" Nullable="false" />
+          <Property Type="String" Name="Emp_Start_Status" Nullable="false" />
+          <Property Type="String" Name="Emp_End_Status" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnboardingOffboardingModelStoreContainer" CdmEntityContainer="OnboardingOffboardingEntities" >
+          <FunctionImportMapping FunctionImportName="PROC_EmployeeDeptDifferential" FunctionName="OnboardingOffboardingModel.Store.PROC_EmployeeDeptDifferential">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="OnboardingOffboardingModel.EmplyeeDeptReport">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Dept_Code" ColumnName="Dept_Code" />
+                <ScalarProperty Name="Emp_Start_Status" ColumnName="Emp_Start_Status" />
+                <ScalarProperty Name="Emp_End_Status" ColumnName="Emp_End_Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

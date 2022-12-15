@@ -1,0 +1,25 @@
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE FUNCTION [dbo].[GetCentralEmployeeHistory]
+(
+	@EMPLOYEE_ID VARCHAR(11)	
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT TOP 1000 EMPLOYEE_ID
+	,Dept_Code
+	,Appt_No
+	,EffDt
+	,Effective_end_dt
+	,Separation_date	
+	FROM [CentralDataFeed].[dbo].[HRI_NC_EMPLOYEES_HIST]
+	WHERE EMPLOYEE_ID = @EMPLOYEE_ID
+	ORDER BY EMPLOYEE_ID, DEPT_CODE, APPT_NO, EFFDT
+)
+
+GO

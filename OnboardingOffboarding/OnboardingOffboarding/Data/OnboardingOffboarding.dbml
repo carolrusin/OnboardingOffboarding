@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="OnboardingOffboarding" Class="OnboardingOffboardingDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=its44.rutgers.edu;Initial Catalog=OnboardingOffboarding;Integrated Security=True" SettingsObjectName="OnboardingOffboarding.Properties.Settings" SettingsPropertyName="OnboardingOffboardingConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BatchLog" Member="BatchLogs">
+    <Type Name="BatchLog">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LogDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Org" Member="Orgs">
+    <Type Name="Org">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Source" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Org_EmployeeOrg" Member="EmployeeOrgs" ThisKey="Id" OtherKey="OrgId" Type="EmployeeOrg" />
+      <Association Name="Org_EmployeeOrgReplay" Member="EmployeeOrgReplays" ThisKey="Id" OtherKey="OrgId" Type="EmployeeOrgReplay" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NetId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RcpId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Lastname" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DateTimeCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateTimeUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Employee_EmployeeOrg" Member="EmployeeOrgs" ThisKey="Id" OtherKey="EmployeeId" Type="EmployeeOrg" />
+      <Association Name="Employee_EmployeeOrgReplay" Member="EmployeeOrgReplays" ThisKey="Id" OtherKey="EmployeeId" Type="EmployeeOrgReplay" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeOrg" Member="EmployeeOrgs">
+    <Type Name="EmployeeOrg">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrgId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="HrBeginDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="HrEndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Employee_EmployeeOrg" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Org_EmployeeOrg" Member="Org" ThisKey="OrgId" OtherKey="Id" Type="Org" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmployeeOrgReplay" Member="EmployeeOrgReplays">
+    <Type Name="EmployeeOrgReplay">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrgId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Employee_EmployeeOrgReplay" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Org_EmployeeOrgReplay" Member="Org" ThisKey="OrgId" OtherKey="Id" Type="Org" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HrEmployeeHistoryForValidOrgs" Member="HrEmployeeHistoryForValidOrgs">
+    <Type Name="HrEmployeeHistoryForValidOrg">
+      <Column Name="EMPLOYEE_ID" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="APPT_NO" Type="System.Decimal" DbType="Decimal(38,0)" CanBeNull="true" />
+      <Column Name="EFFDT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DEPT_CODE" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DEPT_DESCR" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="EMPLOYEE_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NETID" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="RCP_ID" Type="System.Decimal" DbType="Decimal(38,0)" CanBeNull="true" />
+      <Column Name="ASSIGNMENT_STATUS_CODE" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="EMPLOYEE_TYPE_CODE" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="JOB_BEGIN_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="APPT_BEGIN_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="APPT_END_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SEPARATION_DATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SEPARATION_CODE" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="SEPARATION_DESCR" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LAST_DATE_WORKED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PAYGROUP" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="JOB_CLASS" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Column Name="EFFECTIVE_START_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EFFECTIVE_END_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HrUniqueEmployeesForValidOrgs" Member="HrUniqueEmployeesForValidOrgs">
+    <Type Name="HrUniqueEmployeesForValidOrg">
+      <Column Name="EMPLOYEE_ID" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="NETID" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="RCP_ID" Type="System.Decimal" DbType="Decimal(38,0)" CanBeNull="true" />
+      <Column Name="LAST_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FIRST_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.DeleteAllHistoryReplayData" Method="DeleteAllHistoryReplayData">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetEmployeeOrgReport" Method="GetEmployeeOrgReport">
+    <Parameter Name="start" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="end" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="GetEmployeeOrgReportResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrgId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrgName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EmployeeStatus" Type="System.String" DbType="VarChar(22) NOT NULL" CanBeNull="false" />
+      <Column Name="Hire" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetEmployeeOrgReplayReport" Method="GetEmployeeOrgReplayReport">
+    <Parameter Name="start" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="end" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="GetEmployeeOrgReplayReportResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrgId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrgName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="EmployeeStatus" Type="System.String" DbType="VarChar(22) NOT NULL" CanBeNull="false" />
+      <Column Name="Hire" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpdateEmployeeOrgDataFromHrSnapshotData" Method="UpdateEmployeeOrgDataFromHrSnapshotData">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.UpdateEmployeesFromHrData" Method="UpdateEmployeesFromHrData">
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
